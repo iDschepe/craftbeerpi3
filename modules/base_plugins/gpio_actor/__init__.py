@@ -33,6 +33,23 @@ class GPIOSimple(ActorBase):
         GPIO.output(int(self.gpio), 0)
 
 @cbpi.actor
+class GPIOSimpleInverted(ActorBase):
+
+    gpio = Property.Select("GPIO", options=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27], description="GPIO to which the actor is connected")
+
+    def init(self):
+        GPIO.setup(int(self.gpio), GPIO.OUT)
+        GPIO.output(int(self.gpio), 1)
+
+    def on(self, power=0):
+        print "GPIO ON %s" % str(self.gpio)
+        GPIO.output(int(self.gpio), 0)
+
+    def off(self):
+        print "GPIO OFF"
+        GPIO.output(int(self.gpio), 1)
+        
+@cbpi.actor
 class GPIOPWM(ActorBase):
 
     gpio = Property.Select("GPIO", options=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27], description="GPIO to which the actor is connected")
